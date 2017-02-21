@@ -1,0 +1,22 @@
+{
+  "name": "tic-tac-toe",
+  "version": "0.0.0",
+  "authors": [
+    "Marlon DC <marlondc@thisismn.com>"
+  ],
+  "description": "web socket naughts and crosses",
+  "main": "index.js",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~3.1.1"
+  }
+}
