@@ -1,3 +1,4 @@
+//var socket = io.connect('https://web-socket-mdc.herokuapp.com');
 var socket = io.connect('https://localhost:4200');
 
 function User() {
