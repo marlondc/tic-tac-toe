@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:4200');
+var socket = io.connect('https://localhost:4200');
 
 function User() {
   this.name;
