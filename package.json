@@ -4,7 +4,8 @@
   "description": "web socket naughts and crosses game",
   "main": "app.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "iojs app.js"
   },
   "author": "marlondc",
   "license": "ISC",
