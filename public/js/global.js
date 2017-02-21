@@ -11,6 +11,5 @@ socket.on('broad', function(data) {
 $('form').submit(function(e){
   e.preventDefault();
   var message = $('#chat_input').val();
-  console.log("marlon");
   socket.emit('messages', message);
 });
