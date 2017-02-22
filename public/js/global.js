@@ -6,11 +6,15 @@ function User() {
 
 var user = new User;
 
+const greeting = 'Hello people!'
+
 socket.on('connect', function(data) {
   var user_name = prompt("Who dis?");
   user_name === null
     ? user.name = 'Anonymous'
     : user.name = user_name;
+  socket.emit('messages', {name: user.name,
+                           message: greeting});
   socket.emit('join', 'Hello World from ' + user.name);
 });
 
