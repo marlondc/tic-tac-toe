@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:4200');
+var socket = io();
 
 function User() {
   this.name;
@@ -8,14 +8,18 @@ var user = new User;
 
 socket.on('connect', function(data) {
   var user_name = prompt("Who dis?");
-  user_name.length === 0
+  user_name === null
     ? user.name = 'Anonymous'
     : user.name = user_name;
-  socket.emit('join', 'Hello World from ' + name);
+  socket.emit('join', 'Hello World from ' + user.name);
 });
 
 socket.on('broad', function(data) {
-  $('<p>' + data.name + ': ' + data.message + '</p>').appendTo('#future');
+  if (data.message.match(/\/blue/)) {
+    $('<p style=\'background: blue; height: 30px; width: 30px;\'></p>').appendTo('#future');
+  } else {
+    $('<p>' + data.name + ': ' + data.message + '</p>').appendTo('#future');
+  }
 });
 
 $('form').submit(function(e){
