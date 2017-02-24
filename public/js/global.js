@@ -4,15 +4,21 @@ function User() {
   this.name;
 }
 
+const direction = {
+  0: 'right',
+  1: 'left'
+};
+
 var user = new User;
 
 const greeting = 'Hello people!'
 
 socket.on('connect', function(data) {
-  var user_name = prompt("Who dis?");
-  user_name === null
-    ? user.name = 'Anonymous'
-    : user.name = user_name;
+  // var user_name = prompt("Who dis?");
+  // user_name === null || user_name === ''
+  //   ? user.name = 'Anonymous'
+  //   : user.name = user_name;
+  user.name = 'Anonymous';
   socket.emit('messages', {name: user.name,
                            message: greeting});
   socket.emit('join', 'Hello World from ' + user.name);
@@ -26,6 +32,10 @@ socket.on('broad', function(data) {
   }
 });
 
+socket.on('move', function(data) {
+  console.log(data);
+})
+
 $('form').submit(function(e){
   e.preventDefault();
   var message = $('#chat_input').val();
@@ -35,3 +45,7 @@ $('form').submit(function(e){
                             message: message});
   }
 });
+
+function press(value) {
+  socket.emit('direct', direction[value]);
+}

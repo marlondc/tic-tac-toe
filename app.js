@@ -14,13 +14,19 @@ io.on('connection', function(client) {
   console.log('Client connected...');
 
   client.on('join', function(data) {
-    console.log(data);
+    console.log('join', data);
   });
 
   client.on('messages', function(data) {
     client.emit('broad', data);
     client.broadcast.emit('broad', data);
   });
+
+  client.on('direct', function(data) {
+    console.log('direct', data);
+    client.emit('move', data);
+    client.broadcast.emit('move', data);
+  })
 });
 
 server.listen(process.env.PORT || 4200, function() {
