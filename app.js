@@ -13,19 +13,26 @@ app.get('/', function(req, res, next) {
 function Game(target, start) {
   this.target = target;
   this.currentPosition = start;
+  this.player1;
+  this.player2;
 };
 
-function getCordinates() {
+function getCoordinates() {
   let a = Math.floor(Math.random() * 16);
   let b = Math.floor(Math.random() * 16);
   if ( a !== b ) {
     return {target: a, start: b};
   } else {
-    getCordinates();
+    getCoordinates();
   }
 }
 
-let game = new Game(getCordinates.target, getCordinates.start);
+function setUpGameBackend() {
+  let coordinates = getCoordinates();
+  return new Game(coordinates.target, coordinates.start);
+};
+
+let game = setUpGameBackend();
 
 io.on('connection', function(client) {
   var defaultRoom = 'general';
@@ -63,19 +70,19 @@ io.on('connection', function(client) {
   client.on('direct', function(data) {
     switch(data.direction) {
       case 'right':
-        pointer.right += 1;
+        game.currentPosition += 1;
         break;
       case 'left':
-        pointer.left += 1;
+        game.currentPosition -= 1;
         break;
       case 'up':
-        console.log('up');
+        game.currentPosition += 4;
         break;
       case 'down':
-        console.log('down');
+        game.currentPosition -= 4;
         break;
     }
-    io.in(data.room).emit('move', {pointer: pointer});
+    io.in(data.room).emit('move', game);
   })
 
 
