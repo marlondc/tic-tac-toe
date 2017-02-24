@@ -10,7 +10,6 @@ app.get('/', function(req, res, next) {
   res.sendFile(__dirname + '/index.html');
 });
 
-
 function Pointer() {
   this.left = 0;
   this.right = 0;
@@ -30,8 +29,13 @@ io.on('connection', function(client) {
     let user_name = data;
     let generalRoom = io.sockets.adapter.rooms['general'];
     let chatRoom = 'room1';
-    if (generalRoom === undefined || generalRoom.length < 2) {
+    let playerControls;
+    if (generalRoom === undefined) {
       chatRoom = 'general';
+      playerControls = 'horizontal';
+    } else if (generalRoom.length < 2) {
+      chatRoom = 'general';
+      playerControls = 'vertical';
     }
 
     client.join(chatRoom);
@@ -40,24 +44,36 @@ io.on('connection', function(client) {
       name: user_name,
       message : user_name + ' is in ' + chatRoom,
       room: chatRoom,
-      pointer: pointer
+      pointer: pointer,
+      control: playerControls
     };
     client.emit('designatedRoom', data);
   });
 
-  client.on('messages', function(data) {
-    io.in(data.room).emit('broad', data);
-  });
-
   client.on('direct', function(data) {
-    if (data.direction === 'right') {
-      pointer.right += 1;
-    } else {
-      pointer.left += 1;
+    switch(data.direction) {
+      case 'right':
+        pointer.right += 1;
+        break;
+      case 'left':
+        pointer.left += 1;
+        break;
+      case 'up':
+        console.log('up');
+        break;
+      case 'down':
+        console.log('down');
+        break;
     }
     io.in(data.room).emit('move', {pointer: pointer});
   })
+
+
+  // client.on('messages', function(data) {
+  //   io.in(data.room).emit('broad', data);
+  // });
 });
+
 
 server.listen(process.env.PORT || 4200, function() {
   console.log('app listening on port %d ', + this.address().port);

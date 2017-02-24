@@ -4,22 +4,33 @@
   <head>
     <meta charset='UTF-8'>
     <title>Tic Tac Toe</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
   </head>
 
   <body>
 
     <h1>
-      Hello World
+      Play with me!
     </h1>
 
-    <div id='future'>
-
-    </div>
-
-    <form id='chat_form'>
-      <input id='chat_input' type='text' autocomplete='off'>
-      <input type='submit' value='Send'>
-    </form>
+    <ul class="game">
+            <li class="blank" id="cell-1"></li>
+            <li class="blank" id="cell-2"></li>
+            <li class="blank" id="cell-3"></li>
+            <li class="blank" id="cell-4"></li>
+            <li class="blank" id="cell-5"></li>
+            <li class="blank" id="cell-6"></li>
+            <li class="blank" id="cell-7"></li>
+            <li class="blank" id="cell-8"></li>
+            <li class="blank" id="cell-9"></li>
+            <li class="blank" id="cell-10"></li>
+            <li class="blank" id="cell-11"></li>
+            <li class="blank" id="cell-12"></li>
+            <li class="blank" id="cell-13"></li>
+            <li class="blank" id="cell-14"></li>
+            <li class="blank" id="cell-15"></li>
+            <li class="blank" id="cell-16"></li>
+        </ul>
 
     <div>
       <button id='right_click' onclick="press(0)">Right</button>
@@ -28,6 +39,16 @@
 
     <div>
       <button id='left_click' onclick="press(1)">Left</button>
+      <p id='left_count'></p>
+    </div>
+
+    <div>
+      <button id='up_click' onclick="press(2)">Up</button>
+      <p id='right_count'></p>
+    </div>
+
+    <div>
+      <button id='down_click' onclick="press(3)">Down</button>
       <p id='left_count'></p>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
