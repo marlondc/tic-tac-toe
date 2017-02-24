@@ -10,6 +10,14 @@ app.get('/', function(req, res, next) {
   res.sendFile(__dirname + '/index.html');
 });
 
+
+function Pointer() {
+  this.left = 0;
+  this.right = 0;
+}
+
+let pointer = new Pointer;
+
 io.on('connection', function(client) {
   var defaultRoom = 'general';
   var rooms = ['room1', 'room2', 'room3'];
@@ -31,7 +39,8 @@ io.on('connection', function(client) {
     data = {
       name: user_name,
       message : user_name + ' is in ' + chatRoom,
-      room: chatRoom
+      room: chatRoom,
+      pointer: pointer
     };
     client.emit('designatedRoom', data);
   });
@@ -41,8 +50,9 @@ io.on('connection', function(client) {
   });
 
   client.on('direct', function(data) {
-    client.emit('move', data);
-    client.broadcast.emit('move', data);
+    // client.emit('move', data);
+    // client.broadcast.emit('move', data);
+    io.in(data.room).emit('broad', data);
   })
 });
 
