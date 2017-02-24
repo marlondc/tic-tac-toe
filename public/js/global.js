@@ -25,15 +25,11 @@ socket.on('connect', function(data) {
 });
 
 socket.on('designatedRoom', function(data) {
-  console.log(data);
-  user.room = data.room;
-  user.control = data.control;
-  updateCount(data.pointer);
+  setUpGame(data);
 });
 
-
 socket.on('move', function(data) {
- updateCount(data.pointer);
+  console.log(data);
 })
 
 
@@ -42,9 +38,20 @@ function press(value) {
                          direction: directionValues[value]});
 }
 
-function updateCount(object) {
-  $('#left_count').text(object.left);
-  $('#right_count').text(object.right);
+function setUpGame(data) {
+  user.room = data.room;
+  user.control = data.control;
+  removeAppropriateControls();
+}
+
+function removeAppropriateControls() {
+  if (user.control === 'horizontal') {
+    $('#up_click').hide();
+    $('#down_click').hide();
+  } else if (user.control === 'vertical') {
+    $('#right_click').hide();
+    $('#left_click').hide();
+  }
 }
 
 // socket.on('broad', function(data) {
