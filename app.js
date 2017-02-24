@@ -34,12 +34,9 @@ io.on('connection', function(client) {
       room: chatRoom
     };
     client.emit('designatedRoom', data);
-    io.in(chatRoom).emit('broad', data);
   });
 
   client.on('messages', function(data) {
-    // client.emit('broad', data);
-    // client.broadcast.emit('broad', data);
     io.in(data.room).emit('broad', data);
   });
 

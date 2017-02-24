@@ -19,10 +19,10 @@ const user = new User;
 const counter = new Counter;
 
 socket.on('connect', function(data) {
-  // var user_name = prompt("Who dis?");
-  // user_name === null || user_name === ''
-  //   ? user.name = 'Anonymous'
-  //   : user.name = user_name;
+  var user_name = prompt("Who dis?");
+  user_name === null || user_name === ''
+    ? user.name = 'Anonymous'
+    : user.name = user_name;
   user.name = 'Anonymous';
   socket.emit('joinConvo', user.name);
 });
