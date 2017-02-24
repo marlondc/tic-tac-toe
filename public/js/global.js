@@ -2,6 +2,7 @@ var socket = io();
 
 function User() {
   this.name;
+  this.room;
 }
 
 function Counter() {
@@ -14,8 +15,6 @@ const directionValues = {
   1: 'left'
 };
 
-const greeting = 'Hello people!'
-
 const user = new User;
 const counter = new Counter;
 
@@ -25,9 +24,11 @@ socket.on('connect', function(data) {
   //   ? user.name = 'Anonymous'
   //   : user.name = user_name;
   user.name = 'Anonymous';
-  socket.emit('messages', {name: user.name,
-                           message: greeting});
-  socket.emit('join', 'Hello World from ' + user.name);
+  socket.emit('joinConvo', user.name);
+});
+
+socket.on('designatedRoom', function(data) {
+  user.room = data.room;
 });
 
 socket.on('broad', function(data) {
@@ -51,7 +52,8 @@ $('form').submit(function(e){
   $('#chat_input').val('');
   if (message.length !== 0) {
     socket.emit('messages', {name: user.name,
-                            message: message});
+                             message: message,
+                             room: user.room});
   }
 });
 

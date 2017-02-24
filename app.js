@@ -11,19 +11,39 @@ app.get('/', function(req, res, next) {
 });
 
 io.on('connection', function(client) {
-  console.log('Client connected...');
+  var defaultRoom = 'general';
+  var rooms = ['room1', 'room2', 'room3'];
 
-  client.on('join', function(data) {
-    console.log('join', data);
+  client.emit('setup', {
+    rooms: rooms
+  });
+
+  client.on('joinConvo', function(data) {
+    let user_name = data;
+    let generalRoom = io.sockets.adapter.rooms['general'];
+    let chatRoom = 'room1';
+    if (generalRoom === undefined || generalRoom.length < 2) {
+      chatRoom = 'general';
+    }
+
+    client.join(chatRoom);
+    io.in(chatRoom).emit('user joined', data);
+    data = {
+      name: user_name,
+      message : user_name + ' is in ' + chatRoom,
+      room: chatRoom
+    };
+    client.emit('designatedRoom', data);
+    io.in(chatRoom).emit('broad', data);
   });
 
   client.on('messages', function(data) {
-    client.emit('broad', data);
-    client.broadcast.emit('broad', data);
+    // client.emit('broad', data);
+    // client.broadcast.emit('broad', data);
+    io.in(data.room).emit('broad', data);
   });
 
   client.on('direct', function(data) {
-    console.log('direct', data);
     client.emit('move', data);
     client.broadcast.emit('move', data);
   })
