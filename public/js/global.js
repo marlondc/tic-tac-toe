@@ -4,14 +4,20 @@ function User() {
   this.name;
 }
 
-const direction = {
+function Counter() {
+  this.left = 0;
+  this.right = 0
+}
+
+const directionValues = {
   0: 'right',
   1: 'left'
 };
 
-var user = new User;
-
 const greeting = 'Hello people!'
+
+const user = new User;
+const counter = new Counter;
 
 socket.on('connect', function(data) {
   // var user_name = prompt("Who dis?");
@@ -33,7 +39,10 @@ socket.on('broad', function(data) {
 });
 
 socket.on('move', function(data) {
-  console.log(data);
+  data === 'right'
+    ? counter.right += 1
+    : counter.left += 1;
+ updateCount();
 })
 
 $('form').submit(function(e){
@@ -47,5 +56,12 @@ $('form').submit(function(e){
 });
 
 function press(value) {
-  socket.emit('direct', direction[value]);
+  socket.emit('direct', directionValues[value]);
 }
+
+function updateCount() {
+  $('#left_count').text(counter.left);
+  $('#right_count').text(counter.right);
+}
+
+updateCount();
