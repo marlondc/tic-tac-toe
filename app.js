@@ -50,9 +50,12 @@ io.on('connection', function(client) {
   });
 
   client.on('direct', function(data) {
-    // client.emit('move', data);
-    // client.broadcast.emit('move', data);
-    io.in(data.room).emit('broad', data);
+    if (data.direction === 'right') {
+      pointer.right += 1;
+    } else {
+      pointer.left += 1;
+    }
+    io.in(data.room).emit('move', {pointer: pointer});
   })
 });
 

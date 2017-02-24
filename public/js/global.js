@@ -12,11 +12,12 @@ const directionValues = {
 
 const user = new User;
 
+
 socket.on('connect', function(data) {
-  var user_name = prompt("Who dis?");
-  user_name === null || user_name === ''
-    ? user.name = 'Anonymous'
-    : user.name = user_name;
+  // var user_name = prompt("Who dis?");
+  // user_name === null || user_name === ''
+  //   ? user.name = 'Anonymous'
+  //   : user.name = user_name;
   user.name = 'Anonymous';
   socket.emit('joinConvo', user.name);
 });
@@ -35,7 +36,7 @@ socket.on('broad', function(data) {
 });
 
 socket.on('move', function(data) {
- updateCount();
+ updateCount(data.pointer);
 })
 
 $('form').submit(function(e){
@@ -58,5 +59,3 @@ function updateCount(object) {
   $('#left_count').text(object.left);
   $('#right_count').text(object.right);
 }
-
-updateCount();
