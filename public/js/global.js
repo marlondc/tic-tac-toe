@@ -39,6 +39,7 @@ function press(value) {
 }
 
 function setUpGame(data) {
+  console.log(data.game);
   user.room = data.room;
   user.control = data.control;
   removeAppropriateControls();
@@ -53,6 +54,9 @@ function removeAppropriateControls() {
     $('#left_click').hide();
   }
 }
+
+//peach colour #ff7458
+//lagoon blue #00878e
 
 // socket.on('broad', function(data) {
 //   if (data.message.match(/\/blue/)) {

@@ -10,12 +10,22 @@ app.get('/', function(req, res, next) {
   res.sendFile(__dirname + '/index.html');
 });
 
-function Pointer() {
-  this.left = 0;
-  this.right = 0;
+function Game(target, start) {
+  this.target = target;
+  this.currentPosition = start;
+};
+
+function getCordinates() {
+  let a = Math.floor(Math.random() * 16);
+  let b = Math.floor(Math.random() * 16);
+  if ( a !== b ) {
+    return {target: a, start: b};
+  } else {
+    getCordinates();
+  }
 }
 
-let pointer = new Pointer;
+let game = new Game(getCordinates.target, getCordinates.start);
 
 io.on('connection', function(client) {
   var defaultRoom = 'general';
@@ -44,7 +54,7 @@ io.on('connection', function(client) {
       name: user_name,
       message : user_name + ' is in ' + chatRoom,
       room: chatRoom,
-      pointer: pointer,
+      game: game,
       control: playerControls
     };
     client.emit('designatedRoom', data);
