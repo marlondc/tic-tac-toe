@@ -70,16 +70,24 @@ io.on('connection', function(client) {
   client.on('direct', function(data) {
     switch(data.direction) {
       case 'right':
-        game.currentPosition += 1;
+        if(game.currentPosition <= 14) {
+          game.currentPosition += 1;
+        }
         break;
       case 'left':
-        game.currentPosition -= 1;
+        if(game.currentPosition >= 1) {
+          game.currentPosition -= 1;
+        }
         break;
       case 'up':
-        game.currentPosition += 4;
+        if(game.currentPosition <= 11) {
+          game.currentPosition += 4;
+        }
         break;
       case 'down':
-        game.currentPosition -= 4;
+        if(game.currentPosition >= 4) {
+          game.currentPosition -= 4;
+        }
         break;
     }
     io.in(data.room).emit('move', game);
