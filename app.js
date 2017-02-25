@@ -18,8 +18,11 @@ function Game(target, start) {
 };
 
 function User() {
-
 }
+
+const noFurtherRight = [3,7,11,15];
+const noFurtherLeft = [0,4,8,12];
+
 
 function getCoordinates() {
   let a = Math.floor(Math.random() * 16);
@@ -37,6 +40,7 @@ function setUpGameBackend() {
 };
 
 let game = setUpGameBackend();
+let user = new User;
 
 let defaultRoom = 'general';
 let rooms = ['room1', 'room2', 'room3'];
@@ -49,7 +53,6 @@ io.on('connection', function(client) {
   });
 
   client.on('joinConvo', function(data) {
-    let user = new User;
     let chatRoom = 'room1';
     let playerControls;
     if (generalCount === 0) {
@@ -78,13 +81,11 @@ io.on('connection', function(client) {
   client.on('direct', function(data) {
     switch(data.direction) {
       case 'right':
-        const noFurtherRight = [3,7,11,15];
         if(noFurtherRight.indexOf(game.currentPosition) === -1) {
           game.currentPosition += 1;
         }
         break;
       case 'left':
-        const noFurtherLeft = [0,4,8,12];
         if(noFurtherLeft.indexOf(game.currentPosition) === -1) {
           game.currentPosition -= 1;
         }
@@ -101,6 +102,10 @@ io.on('connection', function(client) {
         break;
     }
     io.in(data.room).emit('move', game);
+  })
+
+  client.on('disconnect', function() {
+    console.log(user.name + ' with id: ' + user.socketID + ' has disconnected');
   })
 });
 

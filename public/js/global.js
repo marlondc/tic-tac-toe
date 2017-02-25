@@ -12,11 +12,6 @@ const directionValues = {
 };
 
 function User() {
-  this.name;
-  this.socketID;
-  this.room;
-  this.game;
-  this.control;
 };
 
 const user = new User();
