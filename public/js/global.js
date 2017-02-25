@@ -66,7 +66,7 @@ function setUpGame(data) {
   colourInCells();
 }
 
-function colourInCells() {  
+function colourInCells() {
   $('#cell-' + user.game.target).css({'background': targetColour});
   $('#cell-' + user.game.currentPosition).css({'background': currentColour});
 }

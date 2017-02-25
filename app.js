@@ -104,9 +104,11 @@ io.on('connection', function(client) {
     if(game.currentPosition !== game.target) {
       io.in(data.room).emit('move', game);
     } else if (game.currentPosition === game.target) {
+      let createNewGame = setUpGameBackend();
       io.in(data.room).emit('end game', {currentGame: game,
-                                         newGame: setUpGameBackend()
+                                         newGame: createNewGame
                                          })
+      game = createNewGame;
     }
   })
 
