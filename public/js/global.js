@@ -4,6 +4,7 @@ function User() {
   this.name;
   this.room;
   this.game;
+  this.control;
 }
 
 const targetColour = '#ff7458';
@@ -19,16 +20,12 @@ const directionValues = {
 
 const user = new User;
 
-
 socket.on('connect', function(data) {
-  // var user_name = prompt("Who dis?");
-  // user_name === null || user_name === ''
-  //   ? user.name = 'Anonymous'
-  //   : user.name = user_name;
-  socket.emit('joinConvo', 'player');
+  socket.emit('joinConvo', user);
 });
 
-socket.on('designatedRoom', function(data) {
+socket.on('user joined', function(data) {
+  $('<p>' + data.message + ' with controls ' + data.user.control + '</p>').appendTo('#info');
   setUpGame(data);
 });
 
@@ -49,10 +46,11 @@ function press(value) {
 }
 
 function setUpGame(data) {
-  user.game = data.game
+  user.game = data.game;
   user.room = data.room;
-  user.control = data.control;
-  removeAppropriateControls();
+  user.socketID = data.user.socketID;
+  user.control = data.user.control;
+  removeAppropriateControls(data.user);
   colourInCells();
 }
 
@@ -61,7 +59,7 @@ function colourInCells() {
   $('#cell-' + user.game.currentPosition).css({'background': currentColour});
 }
 
-function removeAppropriateControls() {
+function removeAppropriateControls(userFromData) {
   if (user.control === 'vertical') {
     $('#right_click').hide();
     $('#left_click').hide();

@@ -34,37 +34,41 @@ function setUpGameBackend() {
 
 let game = setUpGameBackend();
 
+let defaultRoom = 'general';
+let rooms = ['room1', 'room2', 'room3'];
+let generalCount = 0;
+
 io.on('connection', function(client) {
-  var defaultRoom = 'general';
-  var rooms = ['room1', 'room2', 'room3'];
 
   client.emit('setup', {
     rooms: rooms
   });
 
   client.on('joinConvo', function(data) {
-    let user_name = data;
-    let generalRoom = io.sockets.adapter.rooms['general'];
+    let user = data;
     let chatRoom = 'room1';
     let playerControls;
-    if (generalRoom === undefined) {
+    if (generalCount === 0) {
       chatRoom = 'general';
-      playerControls = 'horizontal';
-    } else if (generalRoom.length < 2) {
+      user.control = 'horizontal';
+    } else if (generalCount === 1) {
       chatRoom = 'general';
-      playerControls = 'vertical';
+      user.control = 'vertical';
     }
 
     client.join(chatRoom);
-    io.in(chatRoom).emit('user joined', data);
+    user.name = 'Player' + generalCount;
+    user.socketID = client.id;
+    if (chatRoom === 'general') {
+      generalCount += 1;
+    }
     data = {
-      name: user_name,
-      message : user_name + ' is in ' + chatRoom,
+      user: user,
+      message : user.name + ' is in ' + chatRoom,
       room: chatRoom,
-      game: game,
-      control: playerControls
+      game: game
     };
-    client.emit('designatedRoom', data);
+    io.in(client.id).emit('user joined', data);
   });
 
   client.on('direct', function(data) {
