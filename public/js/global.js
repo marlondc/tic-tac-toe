@@ -33,7 +33,7 @@ socket.on('move', function(data) {
   colourInCells();
 })
 
-socket.on('end game', (data) => {
+socket.on('end game', function(data) {
   resetCell();
   user.game = data;
   colourInCells();
