@@ -30,13 +30,6 @@ socket.on('user joined', function(data) {
   $('<p>' + data.message + ' with controls ' + data.user.control + '</p>').appendTo('#info');
 });
 
-function setUserData(userData) {
-  user.name = userData.user.name;
-  user.socketID = userData.user.socketID;
-  user.control = userData.user.control;
-  user.room = userData.room;
-  user.game = userData.game;
-}
 
 socket.on('move', function(data) {
   resetCell();
@@ -44,6 +37,13 @@ socket.on('move', function(data) {
   colourInCells();
 })
 
+function setUserData(userData) {
+  user.name = userData.user.name;
+  user.socketID = userData.user.socketID;
+  user.control = userData.user.control;
+  user.room = userData.room;
+  user.game = userData.game;
+}
 
 function resetCell(){
   $('#cell-' + user.game.currentPosition).css({'background': defaultColour});
@@ -74,26 +74,3 @@ function removeAppropriateControls() {
     $('#down_click').hide();
   }
 }
-
-//peach colour #ff7458
-//lagoon blue #00878e
-
-// socket.on('broad', function(data) {
-//   if (data.message.match(/\/blue/)) {
-//     $('<p style=\'background: blue; height: 30px; width: 30px;\'></p>').appendTo('#future');
-//   } else {
-//     $('<p>' + data.name + ': ' + data.message + '</p>').appendTo('#future');
-//   }
-// });
-
-
-// $('form').submit(function(e){
-//   e.preventDefault();
-//   var message = $('#chat_input').val();
-//   $('#chat_input').val('');
-//   if (message.length !== 0) {
-//     socket.emit('messages', {name: user.name,
-//                              message: message,
-//                              room: user.room});
-//   }
-// });

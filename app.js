@@ -78,12 +78,14 @@ io.on('connection', function(client) {
   client.on('direct', function(data) {
     switch(data.direction) {
       case 'right':
-        if(game.currentPosition <= 14) {
+        const noFurtherRight = [3,7,11,15];
+        if(noFurtherRight.indexOf(game.currentPosition) === -1) {
           game.currentPosition += 1;
         }
         break;
       case 'left':
-        if(game.currentPosition >= 1) {
+        const noFurtherLeft = [0,4,8,12];
+        if(noFurtherLeft.indexOf(game.currentPosition) === -1) {
           game.currentPosition -= 1;
         }
         break;
@@ -100,11 +102,6 @@ io.on('connection', function(client) {
     }
     io.in(data.room).emit('move', game);
   })
-
-
-  // client.on('messages', function(data) {
-  //   io.in(data.room).emit('broad', data);
-  // });
 });
 
 
