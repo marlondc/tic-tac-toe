@@ -36,6 +36,7 @@ function getCoordinates() {
 
 function setUpGameBackend() {
   let coordinates = getCoordinates();
+  console.log(coordinates);
   return new Game(coordinates.target, coordinates.start);
 };
 
