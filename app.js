@@ -53,14 +53,14 @@ io.on('connection', function(client) {
   });
 
   client.on('joinConvo', function(data) {
-    let chatRoom = 'room1';
+    let chatRoom = 'general';
     let playerControls;
     if (generalCount === 0) {
-      chatRoom = 'general';
       user.control = 'horizontal';
     } else if (generalCount === 1) {
-      chatRoom = 'general';
       user.control = 'vertical';
+    } else {
+      user.control = 'watcher';
     }
 
     client.join(chatRoom);

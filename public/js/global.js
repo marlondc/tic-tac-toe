@@ -64,7 +64,12 @@ function removeAppropriateControls() {
   if (user.control === 'vertical') {
     $('#right_click').hide();
     $('#left_click').hide();
-  } else {
+  } else if (user.control === 'horizontal') {
+    $('#up_click').hide();
+    $('#down_click').hide();
+  } else if (user.control === 'watcher') {
+    $('#right_click').hide();
+    $('#left_click').hide();
     $('#up_click').hide();
     $('#down_click').hide();
   }
