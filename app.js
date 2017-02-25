@@ -17,6 +17,10 @@ function Game(target, start) {
   this.player2;
 };
 
+function User() {
+
+}
+
 function getCoordinates() {
   let a = Math.floor(Math.random() * 16);
   let b = Math.floor(Math.random() * 16);
@@ -45,7 +49,7 @@ io.on('connection', function(client) {
   });
 
   client.on('joinConvo', function(data) {
-    let user = data;
+    let user = new User;
     let chatRoom = 'room1';
     let playerControls;
     if (generalCount === 0) {

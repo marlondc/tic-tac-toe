@@ -1,12 +1,5 @@
 var socket = io();
 
-function User() {
-  this.name;
-  this.room;
-  this.game;
-  this.control;
-}
-
 const targetColour = '#ff7458';
 const currentColour = '#00878e';
 const defaultColour ='#eee';
@@ -18,16 +11,32 @@ const directionValues = {
   3: 'down'
 };
 
-const user = new User;
+function User() {
+  this.name;
+  this.socketID;
+  this.room;
+  this.game;
+  this.control;
+};
+
+const user = new User();
 
 socket.on('connect', function(data) {
-  socket.emit('joinConvo', user);
+  socket.emit('joinConvo', 'connected user');
 });
 
 socket.on('user joined', function(data) {
-  $('<p>' + data.message + ' with controls ' + data.user.control + '</p>').appendTo('#info');
   setUpGame(data);
+  $('<p>' + data.message + ' with controls ' + data.user.control + '</p>').appendTo('#info');
 });
+
+function setUserData(userData) {
+  user.name = userData.user.name;
+  user.socketID = userData.user.socketID;
+  user.control = userData.user.control;
+  user.room = userData.room;
+  user.game = userData.game;
+}
 
 socket.on('move', function(data) {
   resetCell();
@@ -46,11 +55,8 @@ function press(value) {
 }
 
 function setUpGame(data) {
-  user.game = data.game;
-  user.room = data.room;
-  user.socketID = data.user.socketID;
-  user.control = data.user.control;
-  removeAppropriateControls(data.user);
+  setUserData(data);
+  removeAppropriateControls();
   colourInCells();
 }
 
@@ -59,7 +65,7 @@ function colourInCells() {
   $('#cell-' + user.game.currentPosition).css({'background': currentColour});
 }
 
-function removeAppropriateControls(userFromData) {
+function removeAppropriateControls() {
   if (user.control === 'vertical') {
     $('#right_click').hide();
     $('#left_click').hide();
