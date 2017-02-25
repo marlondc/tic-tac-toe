@@ -80,13 +80,13 @@ io.on('connection', function(client) {
         }
         break;
       case 'up':
-        if(game.currentPosition <= 11) {
-          game.currentPosition += 4;
+        if(game.currentPosition >= 4) {
+          game.currentPosition -= 4;
         }
         break;
       case 'down':
-        if(game.currentPosition >= 4) {
-          game.currentPosition -= 4;
+        if(game.currentPosition <= 11) {
+          game.currentPosition += 4;
         }
         break;
     }

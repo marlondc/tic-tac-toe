@@ -5,8 +5,8 @@ body {
 ul.game {
     margin: 0;
     padding: 0;
-    width: 365px;
-    height: 365px;
+    width: 380px;
+    height: 380px;
     float: right;
     margin-right: 500px;
 }
@@ -17,8 +17,8 @@ ul.game li {
     list-style: none;
     background: #eee;
     display: inline-block;
-    height: 24%;
-    width: 24%;
+    height: 23%;
+    width: 23%;
     cursor: pointer;
 }
 
