@@ -101,7 +101,13 @@ io.on('connection', function(client) {
         }
         break;
     }
-    io.in(data.room).emit('move', game);
+    if(game.currentPosition !== game.target) {
+      io.in(data.room).emit('move', game);
+    } else if (game.currentPosition === game.target) {
+      io.in(data.room).emit('end game', {currentGame: game,
+                                         newGame: setUpGameBackend()
+                                         })
+    }
   })
 
   client.on('disconnect', function() {

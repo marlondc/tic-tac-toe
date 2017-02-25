@@ -3,6 +3,7 @@ var socket = io();
 const targetColour = '#ff7458';
 const currentColour = '#00878e';
 const defaultColour ='#eee';
+const successColour = '#2670b3';
 
 const directionValues = {
   0: 'right',
@@ -32,6 +33,20 @@ socket.on('move', function(data) {
   colourInCells();
 })
 
+socket.on('end game', (data) => {
+  resetCell();
+  user.game = data;
+  colourInCells();
+  resetCell();
+  user.game = data.newGame;
+  colourInCells();
+})
+
+function press(value) {
+  socket.emit('direct', {room: user.room,
+    direction: directionValues[value]});
+}
+
 function setUserData(userData) {
   user.name = userData.user.name;
   user.socketID = userData.user.socketID;
@@ -42,12 +57,8 @@ function setUserData(userData) {
 
 function resetCell(){
   $('#cell-' + user.game.currentPosition).css({'background': defaultColour});
+  $('#cell-' + user.game.target).css({'background': defaultColour});
 };
-
-function press(value) {
-  socket.emit('direct', {room: user.room,
-                         direction: directionValues[value]});
-}
 
 function setUpGame(data) {
   setUserData(data);
@@ -55,7 +66,7 @@ function setUpGame(data) {
   colourInCells();
 }
 
-function colourInCells() {
+function colourInCells() {  
   $('#cell-' + user.game.target).css({'background': targetColour});
   $('#cell-' + user.game.currentPosition).css({'background': currentColour});
 }
