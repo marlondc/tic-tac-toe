@@ -46,7 +46,6 @@ let game = setUpGameBackend();
 
 let defaultRoom = 'general';
 let rooms = ['room1', 'room2', 'room3'];
-let generalCount = 0;
 
 io.on('connection', function(client) {
 
@@ -63,7 +62,7 @@ io.on('connection', function(client) {
     } else {
       user.control = 'vertical';
     }
-    user.name = 'Player' + generalCount;
+    user.name = 'Player' + (users.length + 1);
     user.socketID = client.id;
     users.push(user);
 
