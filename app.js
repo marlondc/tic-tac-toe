@@ -34,6 +34,8 @@ function getCoordinates() {
   }
 }
 
+let users = [];
+
 function setUpGameBackend() {
   let coordinates = getCoordinates();
   console.log('another game', coordinates);
@@ -41,7 +43,6 @@ function setUpGameBackend() {
 };
 
 let game = setUpGameBackend();
-let user = new User;
 
 let defaultRoom = 'general';
 let rooms = ['room1', 'room2', 'room3'];
@@ -54,6 +55,7 @@ io.on('connection', function(client) {
   });
 
   client.on('joinConvo', function(data) {
+    let user = new User;
     let chatRoom = 'general';
     let playerControls;
     if (generalCount === 0) {
@@ -63,10 +65,11 @@ io.on('connection', function(client) {
     } else {
       user.control = 'watcher';
     }
-
-    client.join(chatRoom);
     user.name = 'Player' + generalCount;
     user.socketID = client.id;
+    users.push(user);
+
+    client.join(chatRoom);
     if (chatRoom === 'general') {
       generalCount += 1;
     }
@@ -113,8 +116,10 @@ io.on('connection', function(client) {
     }
   })
 
-  client.on('disconnect', function() {
-    console.log(user.name + ' with id: ' + user.socketID + ' has disconnected');
+  client.on('disconnect', function(data) {
+    users = users.filter(function(user) {
+      return user.socketID !== client.id
+    })
   })
 });
 
