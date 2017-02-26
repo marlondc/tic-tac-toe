@@ -46,6 +46,7 @@ let game = setUpGameBackend();
 
 let defaultRoom = 'general';
 let rooms = ['room1', 'room2', 'room3'];
+let generalCount = 0
 
 io.on('connection', function(client) {
 
