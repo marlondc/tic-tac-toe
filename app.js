@@ -58,18 +58,25 @@ io.on('connection', function(client) {
     let user = new User;
     let chatRoom = 'general';
     let playerControls;
-    if (generalCount === 0) {
+    if (generalCount % 2 === 0) {
       user.control = 'horizontal';
-    } else if (generalCount === 1) {
-      user.control = 'vertical';
     } else {
-      user.control = 'watcher';
+      user.control = 'vertical';
     }
     user.name = 'Player' + generalCount;
     user.socketID = client.id;
     users.push(user);
 
     client.join(chatRoom);
+    let controls = users.map(function(user) {
+      return user.control;
+    })
+    if(controls.indexOf('vertical') === -1 && controls.length > 1) {
+      console.log('No Vertical control');
+    }
+    if(controls.indexOf('horizontal') === -1 && controls.length > 1) {
+      console.log('No horizontal control');
+    }
     if (chatRoom === 'general') {
       generalCount += 1;
     }
