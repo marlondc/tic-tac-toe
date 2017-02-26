@@ -46,7 +46,6 @@ let game = setUpGameBackend();
 
 let defaultRoom = 'general';
 let rooms = ['room1', 'room2', 'room3'];
-let generalCount = 0;
 
 io.on('connection', function(client) {
 
@@ -58,21 +57,18 @@ io.on('connection', function(client) {
     let user = new User;
     let chatRoom = 'general';
     let playerControls;
-    if (generalCount === 0) {
+    if (users.length === 0) {
       user.control = 'horizontal';
-    } else if (generalCount === 1) {
+    } else if (users.length === 1) {
       user.control = 'vertical';
     } else {
       user.control = 'watcher';
     }
-    user.name = 'Player' + generalCount;
+    user.name = 'Player' + (users.length + 1);
     user.socketID = client.id;
     users.push(user);
 
     client.join(chatRoom);
-    if (chatRoom === 'general') {
-      generalCount += 1;
-    }
     data = {
       user: user,
       message : user.name + ' is in ' + chatRoom,
