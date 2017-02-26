@@ -23,7 +23,7 @@ socket.on('connect', function(data) {
 
 socket.on('user joined', function(data) {
   setUpGame(data);
-  $('<p>' + data.message + ' with controls ' + data.user.control + '</p>').appendTo('#info');
+  $('<p>' + data.message + ' as ' + data.user.control + '</p>').appendTo('#info');
 });
 
 
