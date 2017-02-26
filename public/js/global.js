@@ -18,14 +18,20 @@ function User() {
 const user = new User();
 
 socket.on('connect', function(data) {
-  socket.emit('joinConvo', 'connected user');
+  var user_name = prompt("Who dis?");
+  user_name === null
+    ? user_name = 'Anonymous'
+    : user_name = user_name;
+  socket.emit('joinConvo', user_name);
 });
 
-socket.on('user joined', function(data) {
+socket.on('setup game for user', function(data) {
   setUpGame(data);
-  $('<p>' + data.message + ' as ' + data.user.control + '</p>').appendTo('#info');
 });
 
+socket.on('users in room', function(data) {
+  $('<p>' + data.user.user_name + ' has ' + data.user.control + ' controls</p>').appendTo('#info');
+})
 
 socket.on('move', function(data) {
   resetCell();

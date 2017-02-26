@@ -64,6 +64,7 @@ io.on('connection', function(client) {
       user.control = 'vertical';
     }
     user.name = 'Player' + (users.length + 1);
+    user.user_name = data;
     user.socketID = client.id;
     users.push(user);
 
@@ -82,11 +83,12 @@ io.on('connection', function(client) {
     }
     data = {
       user: user,
-      message : user.name + ' is in ' + chatRoom,
+      message : user.user_name + ' is in ' + chatRoom,
       room: chatRoom,
       game: game
     };
-    io.in(client.id).emit('user joined', data);
+    io.in(client.id).emit('setup game for user', data);
+    io.in(data.room).emit('users in room', data);
   });
 
   client.on('direct', function(data) {
