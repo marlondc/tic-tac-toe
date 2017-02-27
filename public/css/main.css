@@ -8,8 +8,9 @@ ul.game {
     padding: 0;
     width: 380px;
     height: 380px;
-    float: right;
-    margin-right: 500px;
+    position: absolute;
+    top: 29px;
+    left: 308px;
 }
 
 ul.game li {
