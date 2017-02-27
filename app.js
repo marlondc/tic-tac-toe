@@ -30,7 +30,7 @@ function getCoordinates() {
   if ( a !== b ) {
     return {target: a, start: b};
   } else {
-    getCoordinates();
+    return getCoordinates();
   }
 }
 
@@ -38,7 +38,6 @@ let users = [];
 
 function setUpGameBackend() {
   let coordinates = getCoordinates();
-  console.log('another game', coordinates);
   return new Game(coordinates.target, coordinates.start);
 };
 
