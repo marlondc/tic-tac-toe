@@ -13,8 +13,8 @@ const directionValues = {
 };
 
 const keypressCode = {
-  'right' : 37,
-  'left' : 39,
+  'right' : 39,
+  'left' : 37,
   'up' : 38,
   'down' : 40,
 }
@@ -106,12 +106,12 @@ function removeAppropriateControls() {
 $(document).keydown(function(event) {
   let direction;
   if (user.control === 'horizontal' && (event.keyCode === 37 || event.keyCode === 39)) {
-    direction = event.keyCode === 37 ? 'left' : 'right';
+    direction = event.keyCode === keypressCode.left ? 'left' : 'right';
     socket.emit('direct', {room: user.room,
       direction: direction});
   }
   if (user.control === 'vertical' && (event.keyCode === 38 || event.keyCode === 40)) {
-    direction = event.keyCode === 38 ? 'up' : 'down';
+    direction = event.keyCode === keypressCode.up ? 'up' : 'down';
     socket.emit('direct', {room: user.room,
       direction: direction});
   }
