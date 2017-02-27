@@ -103,7 +103,7 @@ function removeAppropriateControls() {
   }
 }
 
-$(document).keypress(function(event) {
+$(document).keydown(function(event) {
   let direction;
   if (user.control === 'horizontal' && (event.keyCode === 37 || event.keyCode === 39)) {
     direction = event.keyCode === 37 ? 'left' : 'right';
