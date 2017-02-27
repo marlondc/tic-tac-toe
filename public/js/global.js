@@ -25,7 +25,7 @@ function User() {
 const user = new User();
 
 socket.on('connect', function(data) {
-  var user_name = prompt("Who dis?");
+  var user_name = prompt("What's your name?");
   user_name === null
     ? user_name = 'Anonymous'
     : user_name = user_name;
