@@ -28,7 +28,7 @@ socket.on('connect', function(data) {
 socket.on('setup game for user', function(data) {
   setUpGame(data);
 });
-
+ 
 socket.on('users in room', function(data) {
   $('<p>' + data.user.user_name + ' has ' + data.user.control + ' controls</p>').appendTo('#info');
 })
