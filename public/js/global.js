@@ -12,6 +12,13 @@ const directionValues = {
   3: 'down'
 };
 
+const keypressCode = {
+  'right' : 37,
+  'left' : 39,
+  'up' : 38,
+  'down' : 40,
+}
+
 function User() {
 };
 
@@ -28,7 +35,7 @@ socket.on('connect', function(data) {
 socket.on('setup game for user', function(data) {
   setUpGame(data);
 });
- 
+
 socket.on('users in room', function(data) {
   $('<p>' + data.user.user_name + ' has ' + data.user.control + ' controls</p>').appendTo('#info');
 })
@@ -52,6 +59,10 @@ function press(value) {
   socket.emit('direct', {room: user.room,
     direction: directionValues[value]});
 }
+
+// const setUserDate = (user) => {
+//
+// }
 
 function setUserData(userData) {
   user.name = userData.user.name;
@@ -84,10 +95,24 @@ function removeAppropriateControls() {
   } else if (user.control === 'horizontal') {
     $('#up_click').hide();
     $('#down_click').hide();
-  } else if (user.control === 'watcher') {
+  } else {
     $('#right_click').hide();
     $('#left_click').hide();
     $('#up_click').hide();
     $('#down_click').hide();
   }
 }
+
+$(document).keypress(function(event) {
+  let direction;
+  if (user.control === 'horizontal' && (event.keyCode === 37 || event.keyCode === 39)) {
+    direction = event.keyCode === 37 ? 'left' : 'right';
+    socket.emit('direct', {room: user.room,
+      direction: direction});
+  }
+  if (user.control === 'vertical' && (event.keyCode === 38 || event.keyCode === 40)) {
+    direction = event.keyCode === 38 ? 'up' : 'down';
+    socket.emit('direct', {room: user.room,
+      direction: direction});
+  }
+});
