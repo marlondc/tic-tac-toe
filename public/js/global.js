@@ -1,10 +1,5 @@
 var socket = io();
 
-const targetColour = '#ff7458';
-const currentColour = '#00878e';
-const defaultColour ='#eee';
-const successColour = '#2670b3';
-
 const directionValues = {
   0: 'right',
   1: 'left',
@@ -73,8 +68,9 @@ function setUserData(userData) {
 }
 
 function resetCell(){
-  $('#cell-' + user.game.currentPosition).css({'background': defaultColour});
-  $('#cell-' + user.game.target).css({'background': defaultColour});
+
+  $('#cell-' + user.game.currentPosition).removeClass('current');
+  $('#cell-' + user.game.target).removeClass('target');
 };
 
 function setUpGame(data) {
@@ -84,8 +80,8 @@ function setUpGame(data) {
 }
 
 function colourInCells() {
-  $('#cell-' + user.game.target).css({'background': targetColour});
-  $('#cell-' + user.game.currentPosition).css({'background': currentColour});
+  $('#cell-' + user.game.target).addClass('target');
+  $('#cell-' + user.game.currentPosition).addClass('current');
 }
 
 function removeAppropriateControls() {

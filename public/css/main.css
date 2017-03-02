@@ -9,11 +9,11 @@ ul.game {
     width: 380px;
     height: 380px;
     position: absolute;
-    top: 29px;
-    left: 308px;
+    top: 10%;
+    left: 37%;
 }
 
-ul.game li {
+ul.game .blank {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -22,6 +22,14 @@ ul.game li {
     height: 23%;
     width: 23%;
     cursor: pointer;
+}
+
+ul.game .target {
+  border: 3px solid #02496a;
+}
+
+ul.game .current {
+  background: #ff7458;
 }
 
 * {

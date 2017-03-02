@@ -15,6 +15,7 @@ function Game(target, start) {
   this.currentPosition = start;
   this.player1;
   this.player2;
+  this.score;
 };
 
 function User() {
