@@ -43,7 +43,6 @@ socket.on('move', function(data) {
 })
 
 socket.on('end game', function(data) {
-  console.log(data.score.value);
   $('#counter').text(data.score.value);
   resetCell();
   user.game = data;

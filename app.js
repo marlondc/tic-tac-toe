@@ -74,12 +74,6 @@ io.on('connection', function(client) {
     let controls = users.map(function(user) {
       return user.control;
     })
-    if(controls.indexOf('vertical') === -1 && controls.length > 1) {
-      console.log('No Vertical control');
-    }
-    if(controls.indexOf('horizontal') === -1 && controls.length > 1) {
-      console.log('No horizontal control');
-    }
     if (chatRoom === 'general') {
       generalCount += 1;
     }
