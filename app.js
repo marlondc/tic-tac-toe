@@ -13,10 +13,11 @@ app.get('/', function(req, res, next) {
 function Game(target, start) {
   this.target = target;
   this.currentPosition = start;
-  this.player1;
-  this.player2;
-  this.score;
 };
+
+function Score() {
+  this.value = 0;
+}
 
 function User() {
 }
@@ -42,7 +43,8 @@ function setUpGameBackend() {
   return new Game(coordinates.target, coordinates.start);
 };
 
-let game = setUpGameBackend();
+let game = setUpGameBackend();g
+let score = new Score();
 
 let defaultRoom = 'general';
 let rooms = ['room1', 'room2', 'room3'];
@@ -85,7 +87,8 @@ io.on('connection', function(client) {
       user: user,
       message : user.user_name + ' is in ' + chatRoom,
       room: chatRoom,
-      game: game
+      game: game,
+      score: score
     };
     io.in(client.id).emit('setup game for user', data);
     io.in(data.room).emit('users in room', data);

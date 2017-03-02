@@ -28,11 +28,12 @@ socket.on('connect', function(data) {
 });
 
 socket.on('setup game for user', function(data) {
+  //private message to user
   setUpGame(data);
 });
 
 socket.on('users in room', function(data) {
-  $('<p>' + data.user.user_name + ' has ' + data.user.control + ' controls</p>').appendTo('#info');
+  //message to all users in the room
 })
 
 socket.on('move', function(data) {
@@ -77,6 +78,7 @@ function setUpGame(data) {
   setUserData(data);
   removeAppropriateControls();
   colourInCells();
+  $('#counter').text(data.score.value);
 }
 
 function colourInCells() {
