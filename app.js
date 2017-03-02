@@ -43,7 +43,7 @@ function setUpGameBackend() {
   return new Game(coordinates.target, coordinates.start);
 };
 
-let game = setUpGameBackend();g
+let game = setUpGameBackend();
 let score = new Score();
 
 let defaultRoom = 'general';
@@ -121,14 +121,17 @@ io.on('connection', function(client) {
       io.in(data.room).emit('move', game);
     } else if (game.currentPosition === game.target) {
       let createNewGame = setUpGameBackend();
+      score.value += 1;
       io.in(data.room).emit('end game', {currentGame: game,
-                                         newGame: createNewGame
+                                         newGame: createNewGame,
+                                         score: score
                                          })
       game = createNewGame;
     }
   })
 
   client.on('disconnect', function(data) {
+    score.value = 0;
     users = users.filter(function(user) {
       return user.socketID !== client.id
     })
