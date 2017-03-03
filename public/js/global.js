@@ -47,7 +47,7 @@ socket.on('end game', function(data) {
     resetCell();
     user.game = data.newGame;
     colourInCells();
-  }, 1500)
+  }, 500)
 })
 
 function press(value) {
