@@ -20,11 +20,7 @@ function User() {
 const user = new User();
 
 socket.on('connect', function(data) {
-  var user_name = prompt("What's your name?");
-  user_name === null
-    ? user_name = 'Anonymous'
-    : user_name = user_name;
-  socket.emit('joinConvo', user_name);
+  socket.emit('joinConvo', 'anonymous');
 });
 
 socket.on('setup game for user', function(data) {
@@ -45,11 +41,13 @@ socket.on('move', function(data) {
 socket.on('end game', function(data) {
   $('#counter').text(data.score.value);
   resetCell();
-  user.game = data;
-  colourInCells();
-  resetCell();
-  user.game = data.newGame;
-  colourInCells();
+  user.game = data.currentGame;
+  colourInOneCell();
+  setTimeout(function() {
+    resetCell();
+    user.game = data.newGame;
+    colourInCells();
+  }, 2000)
 })
 
 function press(value) {
@@ -70,21 +68,24 @@ function setUserData(userData) {
 }
 
 function resetCell(){
-
   $('#cell-' + user.game.currentPosition).removeClass('current');
   $('#cell-' + user.game.target).removeClass('target');
 };
+
+function colourInCells() {
+  $('#cell-' + user.game.target).addClass('target');
+  $('#cell-' + user.game.currentPosition).addClass('current');
+}
+
+function colourInOneCell() {
+  $('#cell-' + user.game.currentPosition).addClass('current');
+}
 
 function setUpGame(data) {
   setUserData(data);
   removeAppropriateControls();
   colourInCells();
   $('#counter').text(data.score.value);
-}
-
-function colourInCells() {
-  $('#cell-' + user.game.target).addClass('target');
-  $('#cell-' + user.game.currentPosition).addClass('current');
 }
 
 function removeAppropriateControls() {
